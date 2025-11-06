@@ -25,7 +25,7 @@ import { Pet } from './pets/entities/pet.entity';
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
         entities: [User, Pet],
-        synchronize: configService.get<boolean>('SYNC'),
+        synchronize: configService.get('SYNC') === 'true',
         logging: false,
       }),
       inject: [ConfigService],
