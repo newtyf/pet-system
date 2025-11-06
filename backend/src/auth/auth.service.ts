@@ -34,7 +34,10 @@ export class AuthService {
       message: 'Login exitoso',
       user: {
         id: user.id,
+        email: user.email,
+        fullName: user.fullName,
         role: user.role,
+        createdAt: user.createdAt,
       },
     };
   }
