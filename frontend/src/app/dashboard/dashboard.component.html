@@ -1,0 +1,29 @@
+<div class="dashboard-container">
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-content">
+      <div class="navbar-brand">
+        <h1>🐾 Pet System</h1>
+      </div>
+
+      <div class="navbar-user">
+        @if (currentUser$ | async; as user) {
+          <div class="user-info">
+            <span class="user-name">{{ user.fullName }}</span>
+            <span class="user-role" [class.admin]="user.role === 'ADMIN'">
+              {{ user.role }}
+            </span>
+          </div>
+          <button class="btn-logout" (click)="logout()">
+            Cerrar Sesión
+          </button>
+        }
+      </div>
+    </div>
+  </nav>
+
+  <!-- Content Area -->
+  <main class="dashboard-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

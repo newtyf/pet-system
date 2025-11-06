@@ -1,0 +1,72 @@
+<div class="modal-overlay" (click)="onCancel()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>{{ title }}</h2>
+      <button class="btn-close" (click)="onCancel()" type="button">✕</button>
+    </div>
+
+    <form [formGroup]="petForm" (ngSubmit)="onSubmit()">
+      <div class="modal-body">
+        <!-- Error Message -->
+        @if (errorMessage) {
+          <div class="alert alert-error">
+            {{ errorMessage }}
+          </div>
+        }
+
+        <!-- Nombre -->
+        <div class="form-group">
+          <label for="name">Nombre <span class="required">*</span></label>
+          <input
+            id="name"
+            type="text"
+            formControlName="name"
+            placeholder="Ej: Max, Luna, Firulais"
+            [class.invalid]="isFieldInvalid('name')"
+          />
+          @if (isFieldInvalid('name')) {
+            <span class="error-message">{{ getErrorMessage('name') }}</span>
+          }
+        </div>
+
+        <!-- Especie -->
+        <div class="form-group">
+          <label for="species">Especie <span class="required">*</span></label>
+          <input
+            id="species"
+            type="text"
+            formControlName="species"
+            placeholder="Ej: Perro, Gato, Ave, Conejo"
+            [class.invalid]="isFieldInvalid('species')"
+          />
+          @if (isFieldInvalid('species')) {
+            <span class="error-message">{{ getErrorMessage('species') }}</span>
+          }
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="onCancel()"
+          [disabled]="loading"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="loading || petForm.invalid"
+        >
+          @if (loading) {
+            <span class="spinner-small"></span>
+            Guardando...
+          } @else {
+            {{ isEditMode ? 'Actualizar' : 'Crear' }}
+          }
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

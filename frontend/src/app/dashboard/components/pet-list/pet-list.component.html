@@ -1,0 +1,90 @@
+<div class="pet-list-container">
+  <div class="header">
+    <h2>Mis Mascotas</h2>
+    @if (!isAdmin()) {
+    <button class="btn-primary" (click)="openCreateModal()">
+      <mat-icon>add</mat-icon>
+      Crear Mascota
+    </button>
+    }
+  </div>
+
+  @if (loading()) {
+  <div class="loading">
+    <div class="spinner"></div>
+    <p>Cargando mascotas...</p>
+  </div>
+  } @else if (pets().length === 0) {
+  <div class="empty-state">
+    <mat-icon class="empty-icon">pets</mat-icon>
+    <h3>No hay mascotas registradas</h3>
+    @if (!isAdmin()) {
+    <p>¡Crea tu primera mascota para comenzar!</p>
+    <button class="btn-primary" (click)="openCreateModal()">
+      <mat-icon>add</mat-icon>
+      Crear Mascota
+    </button>
+    } @else {
+    <p>Los clientes aún no han registrado mascotas.</p>
+    }
+  </div>
+  } @else {
+  <div class="table-container">
+    <table class="pet-table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Especie</th>
+          @if (isAdmin()) {
+          <th>Dueño</th>
+          }
+          <th>Fecha de Registro</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (pet of pets(); track pet.id) {
+        <tr>
+          <td class="pet-name">
+            <mat-icon class="pet-icon">pets</mat-icon>
+            {{ pet.name }}
+          </td>
+          <td>{{ pet.species }}</td>
+          @if (isAdmin()) {
+          <td>
+            <div class="owner-info">
+              <span class="owner-name">{{ pet.owner?.fullName || 'N/A' }}</span>
+              <span class="owner-email">{{ pet.owner?.email || '' }}</span>
+            </div>
+          </td>
+          }
+          <td>{{ pet.createdAt | date : 'dd/MM/yyyy' }}</td>
+          <td>
+            <div class="actions">
+              @if (canEdit(pet)) {
+              <button class="btn-action btn-edit" (click)="openEditModal(pet)" title="Editar">
+                <mat-icon>edit</mat-icon>
+              </button>
+              } @if (canDelete(pet)) {
+              <button class="btn-action btn-delete" (click)="deletePet(pet)" title="Eliminar">
+                <mat-icon>delete</mat-icon>
+              </button>
+              }
+            </div>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  }
+
+  <!-- Modal -->
+  @if (showModal()) {
+  <app-pet-form
+    [pet]="selectedPet()"
+    (saved)="onPetSaved()"
+    (cancelled)="closeModal()"
+  ></app-pet-form>
+  }
+</div>
