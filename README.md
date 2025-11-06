@@ -1,6 +1,23 @@
 <h1 align="center">Pet Management System</h1>
 <h6 align="center">NestJS Backend with Angular Frontend</h6>
 
+## 🌐 Live Demo
+
+The application is deployed and accessible at:
+**https://pet-system.apps.newtyf.com/**
+
+### Test Users
+
+You can use the following credentials to test the application:
+
+**Admin User:**
+- Email: `admin@gmail.com`
+- Password: `123456789`
+
+**Client User:**
+- Email: `cliente@gmail.com`
+- Password: `123456789`
+
 ## 🐳 Run with Docker Compose
 
 ```sh
